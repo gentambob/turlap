@@ -65,9 +65,6 @@ dictio=data()
 
 
 
-
-
-
 left, space1, s,right=st.columns(4)
 #genre = right.radio("Mode",('Links Isian', 'Peta', "Terdekat"))
 if  left.button("clear cache"):
@@ -75,59 +72,62 @@ if  left.button("clear cache"):
 
 
 place=st.empty()
+st.write("cek lokasi dulu")
+location = streamlit_geolocation()
 
-left, nspace, right=place.columns([1,5,1])
-index=st.sidebar.selectbox("index",  options_list)   
-with nspace:
-    m=dictio[index]
-    location = streamlit_geolocation()
-    lat, long=location["latitude"], location["longitude"]
-    print(gpd.points_from_xy(x=[lat], y=[long]))
-    location=m.distance(gpd.points_from_xy(x=[lat], y=[long])[0]).idxmin()
-    location=m.loc[location].geometry.centroid
-    location=location.y, location.x
-    st.write(f"lokasi terdekat adalah {location} ")
-    st.write("(isi kordinat ini pada 'tempat tinggal saat ini dalam form isian')")
-    location=f"https://www.google.com/maps?saddr=My+Location&daddr={location[0]},{location[-1]}"
-    
-    color="#FD504D"
-    st.markdown(
-    f"""
-    <a href="{location}" target="_blank">
-        <div style="
-            display: inline-block;
-            padding: 0.5em 1em;
-            color: #FFFFFF;
-            background-color: {color};
-            border-radius: 3px;
-            text-decoration: none;">
-            {"liat rute  ke "+index + " terdekat"}
-        </div>
-    </a>
-    """,
-    unsafe_allow_html=True
-    )
+if location is not None:
 
-st.text("")
-st.text("")
+    left, nspace, right=place.columns([1,5,1])
+    index=st.sidebar.selectbox("index",  options_list)   
+    with nspace:
+        m=dictio[index]
+        lat, long=location["latitude"], location["longitude"]
+        print(gpd.points_from_xy(x=[lat], y=[long]))
+        location=m.distance(gpd.points_from_xy(x=[lat], y=[long])[0]).idxmin()
+        location=m.loc[location].geometry.centroid
+        location=location.y, location.x
+        st.write(f"lokasi terdekat adalah {location} ")
+        st.write("(isi kordinat ini pada 'tempat tinggal saat ini dalam form isian')")
+        location=f"https://www.google.com/maps?saddr=My+Location&daddr={location[0]},{location[-1]}"
+        
+        color="#FD504D"
+        st.markdown(
+        f"""
+        <a href="{location}" target="_blank">
+            <div style="
+                display: inline-block;
+                padding: 0.5em 1em;
+                color: #FFFFFF;
+                background-color: {color};
+                border-radius: 3px;
+                text-decoration: none;">
+                {"liat rute  ke "+index + " terdekat"}
+            </div>
+        </a>
+        """,
+        unsafe_allow_html=True
+        )
 
-#place2=st.empty()
-#location = streamlit_geolocation()
-with st.expander("form isian"):
-    newplace=st.empty()
-    form='''
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd3XVCYMsamR62e22XK86_Mt-K9MeWZiLipOOceAEYauwOCkg/viewform?embedded=true" 
-    width="640" height="6463" 
-    frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-    '''
-    st.markdown(form, unsafe_allow_html=True)
-with st.expander("liat peta"):
-    #index=st.sidebar.selectbox("index",  options_list) 
-    m=dictio[index]
-    st.write(f"peta {index} seseluruhan")
-    #m=m.explore()
-    #folium_static(m, width=400, height=400)
-with st.expander("upload file rekaman atau foto kalo ada"):
-    st.file_uploader("")
+    st.text("")
+    st.text("")
+
+    #place2=st.empty()
+    #location = streamlit_geolocation()
+    with st.expander("form isian"):
+        newplace=st.empty()
+        form='''
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd3XVCYMsamR62e22XK86_Mt-K9MeWZiLipOOceAEYauwOCkg/viewform?embedded=true" 
+        width="640" height="6463" 
+        frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        '''
+        st.markdown(form, unsafe_allow_html=True)
+    with st.expander("liat peta"):
+        #index=st.sidebar.selectbox("index",  options_list) 
+        m=dictio[index]
+        st.write(f"peta {index} seseluruhan")
+        #m=m.explore()
+        #folium_static(m, width=400, height=400)
+    with st.expander("upload file rekaman atau foto kalo ada"):
+        st.file_uploader("")
 
 
