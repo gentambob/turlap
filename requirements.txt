@@ -1,5 +1,8 @@
-geopandas==0.10.2
+osmnx
+geopandas
 folium
+matplotlib
+mapclassify
+shapely
 streamlit==1.5.0
-streamlit_folium==0.4.0
 streamlit_geolocation
