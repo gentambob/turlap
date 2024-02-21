@@ -9,7 +9,7 @@ import streamlit as st
 from streamlit_folium import folium_static
 import pandas as pd
 import geopandas as gpd
-import shapely 
+#import shapely 
 #from osmnx.projection import project_gdf
 from streamlit_geolocation import streamlit_geolocation
 #import pyperclip
