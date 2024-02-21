@@ -75,7 +75,7 @@ place=st.empty()
 st.write("cek lokasi dulu")
 
 currtent_location =streamlit_geolocation()
-print(currtent_location)
+st.write(currtent_location)
 if currtent_location:
 
     left, nspace, right=place.columns([1,5,1])
