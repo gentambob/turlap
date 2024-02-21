@@ -73,7 +73,7 @@ if  left.button("clear cache"):
 
 place=st.empty()
 st.write("cek lokasi dulu")
-location = streamlit_geolocation()
+currtent_location =streamlit_geolocation()
 
 if location is not None:
 
@@ -81,7 +81,7 @@ if location is not None:
     index=st.sidebar.selectbox("index",  options_list)   
     with nspace:
         m=dictio[index]
-        lat, long=location["latitude"], location["longitude"]
+        lat, long=currtent_location["latitude"], currtent_location["longitude"]
         print(gpd.points_from_xy(x=[lat], y=[long]))
         location=m.distance(gpd.points_from_xy(x=[lat], y=[long])[0]).idxmin()
         location=m.loc[location].geometry.centroid
@@ -125,8 +125,8 @@ if location is not None:
         #index=st.sidebar.selectbox("index",  options_list) 
         m=dictio[index]
         st.write(f"peta {index} seseluruhan")
-        #m=m.explore()
-        #folium_static(m, width=400, height=400)
+        m=m.explore()
+        folium_static(m, width=400, height=400)
     with st.expander("upload file rekaman atau foto kalo ada"):
         st.file_uploader("")
 
