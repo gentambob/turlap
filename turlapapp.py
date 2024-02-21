@@ -75,8 +75,9 @@ place=st.empty()
 st.write("cek lokasi dulu")
 
 currtent_location =streamlit_geolocation()
-st.write(currtent_location)
-if currtent_location:
+if currtent_location["latitude"] is None:
+    st.write("cek lokasi dulu")
+else:
 
     left, nspace, right=place.columns([1,5,1])
     index=st.sidebar.selectbox("index",  options_list)   
