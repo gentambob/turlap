@@ -74,7 +74,7 @@ if  left.button("clear cache"):
 place=st.empty()
 
 with space1:
-    currtent_location =space1.streamlit_geolocation()
+    currtent_location =streamlit_geolocation()
 if currtent_location["latitude"] is None:
     with space1:
         st.header("cek lokasi dulu")
