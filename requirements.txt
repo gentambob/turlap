@@ -6,3 +6,4 @@ mapclassify
 shapely
 streamlit==1.5.0
 streamlit_geolocation
+streamlit_folium
