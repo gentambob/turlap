@@ -120,7 +120,7 @@ else:
         newplace=st.empty()
         form='''
         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd3XVCYMsamR62e22XK86_Mt-K9MeWZiLipOOceAEYauwOCkg/viewform?embedded=true" 
-        width="640" height="6463" 
+        width="360" height="515" 
         frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
         '''
         st.markdown(form, unsafe_allow_html=True)
