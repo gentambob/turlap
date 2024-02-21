@@ -72,11 +72,12 @@ if  left.button("clear cache"):
 
 
 place=st.empty()
-st.write("cek lokasi dulu")
 
-currtent_location =streamlit_geolocation()
+
+currtent_location =space1.streamlit_geolocation()
 if currtent_location["latitude"] is None:
-    st.write("cek lokasi dulu")
+    with space1:
+        st.header("cek lokasi dulu")
 else:
 
     left, nspace, right=place.columns([1,5,1])
