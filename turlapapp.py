@@ -73,9 +73,10 @@ if  left.button("clear cache"):
 
 place=st.empty()
 st.write("cek lokasi dulu")
+
 currtent_location =streamlit_geolocation()
 
-if currtent_location is not None:
+if currtent_location:
 
     left, nspace, right=place.columns([1,5,1])
     index=st.sidebar.selectbox("index",  options_list)   
