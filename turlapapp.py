@@ -89,15 +89,16 @@ else:
     location=m.distance(gpd.points_from_xy(x=[lat], y=[long])[0]).idxmin()
     location=m.loc[location].geometry.centroid
     location=location.y, location.x
-    st.write(f"lokasi terdekat adalah {location} ")
-    st.write("(isi kordinat ini pada 'tempat tinggal saat ini dalam form isian')")
-    location=f"https://www.google.com/maps?saddr=My+Location&daddr={location[0]},{location[-1]}"
-    
-    
+    with left:
+        st.write(f"lokasi terdekat adalah {location} ")
+        st.write("(isi kordinat ini pada 'tempat tinggal saat ini dalam form isian')")
+        location=f"https://www.google.com/maps?saddr=My+Location&daddr={location[0]},{location[-1]}"
+        
+        
 
     #place2=st.empty()
     #location = streamlit_geolocation()
-    with left:
+   
         color="#FD504D"
         st.markdown(
         f"""
