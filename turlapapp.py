@@ -81,7 +81,7 @@ if currtent_location["latitude"] is None:
 else:
 
     #left, nspace, right=place.columns([1,5,1])
-    with nspace:
+    with space1:
         index=st.radio("index",  list(dictio.keys()))   
     m=dictio[index]
     lat, long=currtent_location["latitude"], currtent_location["longitude"]
