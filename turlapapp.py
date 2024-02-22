@@ -81,7 +81,7 @@ if currtent_location["latitude"] is None:
 else:
 
     left, nspace, right=place.columns([1,5,1])
-    index=st.sidebar.selectbox("index",  options_list)   
+    index=st.sidebar.selectbox("index",  list(dictio.keys()))   
     with nspace:
         m=dictio[index]
         lat, long=currtent_location["latitude"], currtent_location["longitude"]
