@@ -93,30 +93,31 @@ else:
     st.write("(isi kordinat ini pada 'tempat tinggal saat ini dalam form isian')")
     location=f"https://www.google.com/maps?saddr=My+Location&daddr={location[0]},{location[-1]}"
     
-    color="#FD504D"
-    st.markdown(
-    f"""
-    <a href="{location}" target="_blank">
-        <div style="
-            display: inline-block;
-            padding: 0.5em 1em;
-            color: #FFFFFF;
-            background-color: {color};
-            border-radius: 3px;
-            text-decoration: none;">
-            {"liat rute  ke "+index + " terdekat"}
-        </div>
-    </a>
-    """,
-    unsafe_allow_html=True
-    )
-
-    st.text("")
-    st.text("")
+    
 
     #place2=st.empty()
     #location = streamlit_geolocation()
     with left:
+        color="#FD504D"
+        st.markdown(
+        f"""
+        <a href="{location}" target="_blank">
+            <div style="
+                display: inline-block;
+                padding: 0.5em 1em;
+                color: #FFFFFF;
+                background-color: {color};
+                border-radius: 3px;
+                text-decoration: none;">
+                {"liat rute  ke "+index + " terdekat"}
+            </div>
+        </a>
+        """,
+        unsafe_allow_html=True
+        )
+
+        st.text("")
+        st.text("")
         with st.expander("form isian"):
             newplace=st.empty()
             form='''
