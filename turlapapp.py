@@ -13,7 +13,7 @@ import geopandas as gpd
 #from osmnx.projection import project_gdf
 from streamlit_geolocation import streamlit_geolocation
 #import pyperclip
-#st.set_page_config(layout="wide", page_icon="📍")
+st.set_page_config(layout="wide", page_icon="📍")
 
 
 
