@@ -127,7 +127,7 @@ else:
     with st.expander("liat peta"):
         #index=st.sidebar.selectbox("index",  options_list) 
         m=dictio[index]
-        st.write(f"peta {index} seseluruhan")
+        st.write(f"peta {index} keseluruhan")
         m=m.explore()
         folium_static(m, width=400, height=400)
     with st.expander("upload file rekaman atau foto kalo ada"):
