@@ -65,7 +65,7 @@ dictio=data()
 
 
 
-left, space1, s,right=st.columns(4)
+left, space1=st.columns(2)
 #genre = right.radio("Mode",('Links Isian', 'Peta', "Terdekat"))
 if  left.button("clear cache"):
     st.experimental_singleton.clear()
