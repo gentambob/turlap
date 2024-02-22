@@ -80,8 +80,8 @@ if currtent_location["latitude"] is None:
         st.header("cek lokasi dulu")
 else:
 
-    left, nspace, right=place.columns([1,5,1])
-    with right:
+    #left, nspace, right=place.columns([1,5,1])
+    with nspace:
         index=st.radio("index",  list(dictio.keys()))   
     m=dictio[index]
     lat, long=currtent_location["latitude"], currtent_location["longitude"]
