@@ -73,7 +73,7 @@ if  left.button("clear cache"):
 
 place=st.empty()
 
-with space1:
+with s:
     currtent_location =streamlit_geolocation()
 if currtent_location["latitude"] is None:
     with space1:
