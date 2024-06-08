@@ -87,7 +87,6 @@ else:
     #m=dictio['hotspot portal (komplek)']
     lat, long=currtent_location["latitude"], currtent_location["longitude"]
     #lat,long=-6.239999325231135, 106.81222830181815
-    geser=gpd.points_from_xy(x=[lat], y=[long])[0]
     points=[(x, y) for x, y in zip(m.centroid.x, m.centroid.y)]
     location=pd.Series(distancing(center=(long, lat), points=points)).idxmin()
     m.loc[location, "selected"]=True
@@ -137,6 +136,20 @@ else:
         with st.expander("liat peta"):
             #index=st.sidebar.selectbox("index",  options_list) 
             m=dictio[index]
+            m=m.reset_index(drop=True)
+            m["selected"]=False
+            #m=dictio['hotspot portal (komplek)']
+            lat, long=currtent_location["latitude"], currtent_location["longitude"]
+            #lat,long=-6.239999325231135, 106.81222830181815
+            points=[(x, y) for x, y in zip(m.centroid.x, m.centroid.y)]
+            location=pd.Series(distancing(center=(long, lat), points=points)).idxmin()
+            m.loc[location, "selected"]=True
+            m["selected"]= m["selected"].replace({True:10, False:0}).astype(float).fillna(0)
+            m.plot("selected")
+            location=m.loc[location].geometry.centroid
+            location=location.y, location.x
+
+            
             st.write(f"peta {index} keseluruhan")
             m=m.explore(column="selected")
             folium_static(m, width=400, height=400)
