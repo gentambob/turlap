@@ -91,7 +91,7 @@ else:
     points=[(x, y) for x, y in zip(m.centroid.x, m.centroid.y)]
     location=pd.Series(distancing(center=(long, lat), points=points)).idxmin()
     m.loc[location, "selected"]=True
-    m["selected"]= m["selected"].replace({True:10, False:0})
+    m["selected"]= m["selected"].replace({True:10, False:0}).astype(float)
     location=m.loc[location].geometry.centroid
     location=location.y, location.x
     
@@ -137,7 +137,7 @@ else:
             #index=st.sidebar.selectbox("index",  options_list) 
             m=dictio[index]
             st.write(f"peta {index} keseluruhan")
-            m=m.explore("selected")
+            m=m.explore(column="selected")
             folium_static(m, width=400, height=400)
         with st.expander("upload file rekaman atau foto kalo ada"):
             st.file_uploader("")
