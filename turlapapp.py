@@ -91,6 +91,7 @@ else:
     points=[(x, y) for x, y in zip(m.centroid.x, m.centroid.y)]
     location=pd.Series(distancing(center=(long, lat), points=points)).idxmin()
     m.loc[location, "selected"]=True
+    m["selected"]= m["selected"].replace({True:10, False:0})
     location=m.loc[location].geometry.centroid
     location=location.y, location.x
     
