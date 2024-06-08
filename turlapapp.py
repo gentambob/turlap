@@ -149,9 +149,10 @@ else:
             location=m.loc[location].geometry.centroid
             location=location.y, location.x
 
-            
+
             st.write(f"peta {index} keseluruhan")
-            m=m.explore(column="selected")
+            m=m.explore(column="selected",  cmap="Set1", location = [lat, long], zoom_start = 16)
+
             folium_static(m, width=400, height=400)
         with st.expander("upload file rekaman atau foto kalo ada"):
             st.file_uploader("")
