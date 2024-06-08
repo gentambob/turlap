@@ -83,6 +83,7 @@ else:
         index=st.radio("index",  list(dictio.keys()))   
     m=dictio[index]
     m=m.reset_index(drop=True)
+    m["selected"]=False
     #m=dictio['hotspot portal (komplek)']
     lat, long=currtent_location["latitude"], currtent_location["longitude"]
     #lat,long=-6.239999325231135, 106.81222830181815
