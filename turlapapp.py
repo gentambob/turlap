@@ -14,8 +14,24 @@ import geopandas as gpd
 from streamlit_geolocation import streamlit_geolocation
 #import pyperclip
 st.set_page_config(layout="wide", page_icon="📍")
+from math import radians, cos, sin, asin, sqrt
+def haversine(lon1, lat1, lon2, lat2):
+    
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
 
+    # haversine formula 
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    r = 6371 # Radius of earth in kilometers. Use 3956 for miles
+    return c * r
 
+def distancing(center, points):
+    distances=[]
+    for p in points:
+        distances.append(haversine(center[0], center[-1], p[0], p[-1]))
+    return distances
 
 
 
@@ -39,25 +55,7 @@ def data():
     dictio["hotspot portal (komplek)"]=gpd.sjoin(hayashi[hayashi["BE_2016"]=="計画"], gdf[gdf["LocalMoranHotCold:All RSBs"]=="HH"])
     dictio["coldspot portal (komplek)"]=gpd.sjoin(hayashi[hayashi["BE_2016"]=="計画"], gdf[gdf["LocalMoranHotCold:All RSBs"]=="LL"])
     dictio["coldspot portal (kampung)"]=gpd.sjoin(hayashi[hayashi["BE_2016"]=="カンポン"], gdf[gdf["LocalMoranHotCold:All RSBs"]=="LL"])
-    """
-    file="/Volumes/HDPH-UT/DATA/scraping/ruko_indonesia/2022-07-09_mamikos.csv"
-    gdf=gpd.GeoDataFrame(pd.read_csv(file), geometry=pd.read_csv(file)["geometry"].apply(shapely.wkt.loads),
-                    crs= "EPSG:3395")
 
-    cols=gdf.dtypes.rename("type")
-    for i, c in zip(cols.index,cols):
-        if c.name=='bool':
-            gdf["dummy"+str(i)]=gdf[i].replace({True:1, False:0})
-
-    gdf["dummymarried_couple_allowed"]=gdf["dummymarried_couple_allowed"].replace({0:1, 1:0})
-    kebo=gdf[gdf[["dummyopposite_sex_not_allowed", "dummygendered","dummymarried_couple_allowed"]].sum(1)>0]
-    notkebo=gdf.loc[gdf.index.isin(kebo.index)==False]
-    kebo.to_crs("epsg:4326")[["geometry", "name_slug"]].to_file("kebo.gpkg",  driver="GPKG")
-    notkebo.to_crs("epsg:4326")[["geometry", "name_slug"]].to_file("notkebo.gpkg",  driver="GPKG")
-    #cctv=gdf[gdf["dummyCCTV"]>0]
-    #guard=gdf[gdf[ 'dummyguard']>0]
- 
-    """
     dictio["kosan (gak boleh kumpul kebo)"]=gpd.read_file(kebo)
     dictio["kosan (gak larang kumpul kebo)"]=gpd.read_file(notkebo)
     return dictio
@@ -84,11 +82,17 @@ else:
     with space1:
         index=st.radio("index",  list(dictio.keys()))   
     m=dictio[index]
+    m=m.reset_index(drop=True)
+    #m=dictio['hotspot portal (komplek)']
     lat, long=currtent_location["latitude"], currtent_location["longitude"]
-    print(gpd.points_from_xy(x=[lat], y=[long]))
-    location=m.distance(gpd.points_from_xy(x=[lat], y=[long])[0]).idxmin()
+    lat,long=-6.239999325231135, 106.81222830181815
+    geser=gpd.points_from_xy(x=[lat], y=[long])[0]
+    points=[(x, y) for x, y in zip(m.centroid.x, m.centroid.y)]
+    location=pd.Series(distancing(center=(long, lat), points=points)).idxmin()
+    m.loc[location, "selected"]=True
     location=m.loc[location].geometry.centroid
     location=location.y, location.x
+    
     with left:
         st.write(f"lokasi terdekat adalah {location} ")
         st.write("(isi kordinat ini pada 'tempat tinggal saat ini dalam form isian')")
@@ -131,7 +135,7 @@ else:
             #index=st.sidebar.selectbox("index",  options_list) 
             m=dictio[index]
             st.write(f"peta {index} keseluruhan")
-            m=m.explore()
+            m=m.explore("selected")
             folium_static(m, width=400, height=400)
         with st.expander("upload file rekaman atau foto kalo ada"):
             st.file_uploader("")
