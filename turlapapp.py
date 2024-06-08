@@ -85,7 +85,7 @@ else:
     m=m.reset_index(drop=True)
     #m=dictio['hotspot portal (komplek)']
     lat, long=currtent_location["latitude"], currtent_location["longitude"]
-    lat,long=-6.239999325231135, 106.81222830181815
+    #lat,long=-6.239999325231135, 106.81222830181815
     geser=gpd.points_from_xy(x=[lat], y=[long])[0]
     points=[(x, y) for x, y in zip(m.centroid.x, m.centroid.y)]
     location=pd.Series(distancing(center=(long, lat), points=points)).idxmin()
