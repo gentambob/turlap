@@ -51,13 +51,13 @@ def data():
     
 
     dictio={}
-    dictio["hotspot portal (kampung)"]=gpd.sjoin(hayashi[hayashi["BE_2016"]=="カンポン"], gdf[gdf["LocalMoranHotCold:All RSBs"]=="HH"])
-    dictio["hotspot portal (komplek)"]=gpd.sjoin(hayashi[hayashi["BE_2016"]=="計画"], gdf[gdf["LocalMoranHotCold:All RSBs"]=="HH"])
-    dictio["coldspot portal (komplek)"]=gpd.sjoin(hayashi[hayashi["BE_2016"]=="計画"], gdf[gdf["LocalMoranHotCold:All RSBs"]=="LL"])
-    dictio["coldspot portal (kampung)"]=gpd.sjoin(hayashi[hayashi["BE_2016"]=="カンポン"], gdf[gdf["LocalMoranHotCold:All RSBs"]=="LL"])
+    dictio["hotspot portal (kampung)"]=gpd.sjoin(hayashi[hayashi["BE_2016"]=="カンポン"], gdf[gdf["LocalMoranHotCold:All RSBs"]=="HH"]).reset_index()
+    dictio["hotspot portal (komplek)"]=gpd.sjoin(hayashi[hayashi["BE_2016"]=="計画"], gdf[gdf["LocalMoranHotCold:All RSBs"]=="HH"]).reset_index()
+    dictio["coldspot portal (komplek)"]=gpd.sjoin(hayashi[hayashi["BE_2016"]=="計画"], gdf[gdf["LocalMoranHotCold:All RSBs"]=="LL"]).reset_index()
+    dictio["coldspot portal (kampung)"]=gpd.sjoin(hayashi[hayashi["BE_2016"]=="カンポン"], gdf[gdf["LocalMoranHotCold:All RSBs"]=="LL"]).reset_index()
 
-    dictio["kosan (gak boleh kumpul kebo)"]=gpd.read_file(kebo)
-    dictio["kosan (gak larang kumpul kebo)"]=gpd.read_file(notkebo)
+    dictio["kosan (gak boleh kumpul kebo)"]=gpd.read_file(kebo).reset_index()
+    dictio["kosan (gak larang kumpul kebo)"]=gpd.read_file(notkebo).reset_index()
     return dictio
 dictio=data()
 
@@ -82,7 +82,6 @@ else:
     with space1:
         index=st.radio("index",  list(dictio.keys()))   
     m=dictio[index]
-    m=m.reset_index(drop=True)
     m["selected"]=False
     #m=dictio['hotspot portal (komplek)']
     lat, long=currtent_location["latitude"], currtent_location["longitude"]
@@ -136,7 +135,6 @@ else:
         with st.expander("liat peta"):
             #index=st.sidebar.selectbox("index",  options_list) 
             m=dictio[index]
-            m=m.reset_index(drop=True)
             m["selected"]=False
             #m=dictio['hotspot portal (komplek)']
             lat, long=currtent_location["latitude"], currtent_location["longitude"]
